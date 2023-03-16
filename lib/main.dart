@@ -135,43 +135,61 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'APP TEST',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
       home: Scaffold(
-        appBar: AppBar(
-          title: const Text('APP TEST'),
+        appBar: AppBar(title: const Text('APP TEST')),
+        body: const Center(
+          child: DialogExample(),
         ),
-        body: Center(
-            child: FutureBuilder<User>(
-          future: futurePh,
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return Column(
-                children: [
-                  Text(snapshot.data!.name),
-                  Text(snapshot.data!.email),
-                  Text(snapshot.data!.phone),
-                  Text(snapshot.data!.website),
-                  Text(snapshot.data!.address.street),
-                  Text(snapshot.data!.address.suite),
-                  Text(snapshot.data!.address.city),
-                  Text(snapshot.data!.address.zipcode),
-                  Text(snapshot.data!.address.geo.lat),
-                  Text(snapshot.data!.address.geo.lng),
-                  Text(snapshot.data!.company.name),
-                  Text(snapshot.data!.company.catchPhrase),
-                  Text(snapshot.data!.company.bs),
-                ],
-              );
-            } else if (snapshot.hasError) {
-              return Text("${snapshot.error}");
-            }
-            return const CircularProgressIndicator();
-          },
-        )),
       ),
+    );
+  }
+}
+
+class DialogExample extends StatelessWidget {
+  const DialogExample({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      onPressed: () => showDialog<String>(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+          title: const Text('Nome do usuário'),
+          content: TextEx(),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.pop(context, 'Cancel'),
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () => Navigator.pop(context, 'OK'),
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      ),
+      child: const Text('Show Dialog'),
+    );
+  }
+}
+
+class TextEx extends StatelessWidget {
+  const TextEx({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<User>(
+      future: fetchUser(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return Text(snapshot.data!.name);
+        } else if (snapshot.hasError) {
+          return Text("${snapshot.error}");
+        }
+
+        // By default, show a loading spinner.
+        return const CircularProgressIndicator();
+      },
     );
   }
 }
