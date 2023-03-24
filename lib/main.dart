@@ -2,9 +2,27 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'home.dart';
 
-Future<User> fetchUser() async {
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Meu App',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: Home(),
+    );
+  }
+}
+
+
+/* Future<User> fetchUser() async {
   final response =
       await http.get(Uri.parse('https://jsonplaceholder.typicode.com/users/1'));
 
@@ -193,3 +211,45 @@ class TextEx extends StatelessWidget {
     );
   }
 }
+
+ /* Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'APP TEST',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('APP TEST'),
+        ),
+        body: Center(
+            child: FutureBuilder<User>(
+          future: futurePh,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return Column(
+                children: [
+                  Text(snapshot.data!.name),
+                  Text(snapshot.data!.email),
+                  Text(snapshot.data!.phone),
+                  Text(snapshot.data!.website),
+                  Text(snapshot.data!.address.street),
+                  Text(snapshot.data!.address.suite),
+                  Text(snapshot.data!.address.city),
+                  Text(snapshot.data!.address.zipcode),
+                  Text(snapshot.data!.address.geo.lat),
+                  Text(snapshot.data!.address.geo.lng),
+                  Text(snapshot.data!.company.name),
+                  Text(snapshot.data!.company.catchPhrase),
+                  Text(snapshot.data!.company.bs),
+                ],
+              );
+            } else if (snapshot.hasError) {
+              return Text("${snapshot.error}");
+            }
+            return const CircularProgressIndicator();
+          },
+        )),
+      ),
+    );*/
+    */
